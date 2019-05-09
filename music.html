@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>图文混排实践案例</title>
+<style type="text/css">
+	body{text-align:center;}
+</style>
+
+
+</head>
+<body>
+	
+	<audio id="audio" controls src="Music/μ's - 僕らは今のなかで.mp3">浏览器不支持audio标签</audio>
+	<p id="p">μ's - 僕らは今のなかで</p>
+	<input type="file" id="f" style="display: none" onChange="s()">
+	<button id="btn0">选择音乐</button><br/>
+	<button id="btn1"><img src="imgage/播放.jpg" alt="jpg"></button>
+<script type="text/javascript">
+	btn0.onclick = function(){
+		f.click();
+	}
+	function s(){
+		var file = document.getElementById('f').files[0];
+		audio.src = 'Music/' + file.name;
+		p.innerHTML = file.name.replace(/.mp3/,"");
+	}
+	btn1.onclick = function(){
+//		var audio = document.getElementById('audio');
+//		if(audio){
+//		    img.src = 'imgage/暂时.jpg';
+//			audio.play();
+//		    }
+//		if(audio.onplaying){
+//		    img.src = 'imgage/暂时.jpg';
+//			audio.pause();
+//		    }
+//		p.innerHTML = m1.innerHTML;
+	}
+</script>
+</body>
+</html>
