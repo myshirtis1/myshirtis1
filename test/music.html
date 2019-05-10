@@ -11,31 +11,35 @@
 </head>
 <body>
 	
-	<audio id="audio" controls src="Music/μ's - 僕らは今のなかで.mp3">浏览器不支持audio标签</audio>
-	<p id="p">μ's - 僕らは今のなかで</p>
-	<input type="file" id="f" style="display: none" onChange="s()">
+	<audio id="audio" controls >浏览器不支持audio标签</audio>
+	<p id="p">请选择歌曲</p>
+	<input type="file" id="file" style="display: none" onChange="s()" multiple>
 	<button id="btn0">选择音乐</button><br/>
-	<button id="btn1"><img src="imgage/播放.jpg" alt="jpg"></button>
+	<button id="play"><img id="img" src="imgage/播放.jpg" alt="jpg"></button>
 <script type="text/javascript">
 	btn0.onclick = function(){
-		f.click();
+		//		console.log();
+		file.click();
 	}
 	function s(){
-		var file = document.getElementById('f').files[0];
-		audio.src = 'Music/' + file.name;
-		p.innerHTML = file.name.replace(/.mp3/,"");
+		var f = document.getElementById('file').files[0];
+		audio.src = 'music/' + f.name;
+		if(".mp3"==f.name.match(".mp3")){
+			p.innerHTML = f.name.replace(/.mp3/,"");
+		}else{
+			p.innerHTML = f.name.replace(/.flac/,"");
+		}	
 	}
-	btn1.onclick = function(){
-//		var audio = document.getElementById('audio');
-//		if(audio){
-//		    img.src = 'imgage/暂时.jpg';
-//			audio.play();
-//		    }
-//		if(audio.onplaying){
-//		    img.src = 'imgage/暂时.jpg';
-//			audio.pause();
-//		    }
-//		p.innerHTML = m1.innerHTML;
+	play.onclick = function(){
+		var audio = document.getElementById('audio');
+		var img = document.getElementById('img');
+		if(audio.paused){
+		    img.src = 'imgage/暂停.jpg';
+			audio.play();
+		} else {
+			img.src = 'imgage/播放.jpg';
+			audio.pause();
+		}
 	}
 </script>
 </body>
