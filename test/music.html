@@ -4,42 +4,65 @@
 <meta charset="utf-8">
 <title>音乐</title>
 <style type="text/css">
-	body{text-align:center;}
+	button{display: block;}
+	span{display: block;}
+	#play{
+		background: url(imgage/播放.jpg);
+		width: 25px;
+		height: 25px;
+		background-size:cover;
+	}
+	#list{display: list-item;}
+	#div{
+		overflow-x:hidden;
+    	overflow-y:auto;
+		padding: 5px;
+		border: 3px solid aqua;
+		width: 300px;
+		height: 200px;
+	}
 </style>
 
 
 </head>
 <body>
+<div align="center">
+		<audio id="audio" controls>浏览器不支持audio标签</audio>
+		
+		<span id="play"></span>
+		
+		<p id="p">请选择歌曲</p>
+		
+		<input type="file" id="choose" style="display: none" onChange="uL(this)" multiple>
+		
+		<button id="upLoad" onClick="">点击上传本地音乐(按住Ctrl可多选)</button>
+		
+		<div id="div"></div>
+</div>
 	
-	<audio id="audio" controls >浏览器不支持audio标签</audio>
-	<p id="p">请选择歌曲</p>
-	<input type="file" id="file" style="display: none" onChange="s()" multiple>
-	<button id="btn0">选择音乐</button><br/>
-	<button id="play"><img id="img" src="imgage/播放.jpg" alt="jpg"></button>
 <script type="text/javascript">
-	btn0.onclick = function(){
-		//		console.log();
-		file.click();
+	var upLoad = document.getElementById("upLoad");
+	var choose = document.getElementById("choose");
+	var oDiv   = document.getElementById("div");
+	var p      = document.getElementById("p");
+	var audio  = document.getElementById("audio");
+	
+	upLoad.onclick = ()=>{
+		choose.click();
 	}
-	function s(){
-		var f = document.getElementById('file').files[0];
-		audio.src = 'music/' + f.name;
-		if(".mp3"==f.name.match(".mp3")){
-			p.innerHTML = f.name.replace(/.mp3/,"");
-		}else{
-			p.innerHTML = f.name.replace(/.flac/,"");
-		}	
-	}
-	play.onclick = function(){
-		var audio = document.getElementById('audio');
-		var img = document.getElementById('img');
-		if(audio.paused){
-		    img.src = 'imgage/暂停.jpg';
-			audio.play();
-		} else {
-			img.src = 'imgage/播放.jpg';
-			audio.pause();
+	
+	function uL(obj){
+		try{
+			var songList = obj.files;
+			p.innerHTML = songList[0].name.match(/[^\.]+/);
+			audio.src = "music/"+songList[0].name;
+			oDiv.innerHTML = "";
+			console.log(songList[0].getTrustedUrl());
+			for(var i = 0;i<songList.length;i++){
+				oDiv.innerHTML += "<button style='width:100%'>"+songList[i].name.match(/[^\.]+/)+"</button>"
+			}
 		}
+		catch(err){}
 	}
 </script>
 </body>
