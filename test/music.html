@@ -33,36 +33,72 @@
 		
 		<p id="p">请选择歌曲</p>
 		
-		<input type="file" id="choose" style="display: none" onChange="uL(this)" multiple>
+		<input type="file" id="choose" style="display: none" onChange="uL()" multiple>
 		
-		<button id="upLoad" onClick="">点击上传本地音乐(按住Ctrl可多选)</button>
+		<button id="upLoad" onClick="">点击上传本地音乐(按住Ctrl可多选)</button><br>
+<!--		<button id="show" onClick=onShow(this)>点击显示</button>-->
 		
 		<div id="div"></div>
 </div>
 	
-<script type="text/javascript">
-	var upLoad = document.getElementById("upLoad");
-	var choose = document.getElementById("choose");
-	var oDiv   = document.getElementById("div");
-	var p      = document.getElementById("p");
-	var audio  = document.getElementById("audio");
+<script>
+	var upLoad   = document.getElementById("upLoad");
+	var choose   = document.getElementById("choose");
+	var oDiv     = document.getElementById("div");
+	var p        = document.getElementById("p");
+	var audio    = document.getElementById("audio");
+	var songList = document.getElementById("choose");
+	var show     = document.getElementById("show");
 	
+	//触发input的点击事件	
 	upLoad.onclick = ()=>{
 		choose.click();
 	}
 	
-	function uL(obj){
+	//input的点击函数
+	function uL(){
 		try{
-			var songList = obj.files;
-			p.innerHTML = songList[0].name.match(/[^\.]+/);
-			audio.src = "music/"+songList[0].name;
+			p.innerHTML    = songList.files[0].name.match(/[^\.]+/);
 			oDiv.innerHTML = "";
-			console.log(songList[0].getTrustedUrl());
-			for(var i = 0;i<songList.length;i++){
-				oDiv.innerHTML += "<button style='width:100%'>"+songList[i].name.match(/[^\.]+/)+"</button>"
+			
+			readPath(songList.files[0]);
+			
+			console.log(songList.files[0]);
+			
+			for(var i = 0;i<songList.files.length;i++){
+				oDiv.innerHTML += "<button style='width:100%' onClick='choosePlay("
+					+i
+					+")'>"
+					+ songList.files[i].name.match(/[^\.]+/)
+					+ "</button>";
 			}
 		}
-		catch(err){}
+		catch(err){
+			console.log(err);
+		}
+	}
+	
+	//歌曲列表中项的点击函数
+	function choosePlay(num){
+		try{
+			 readPath(songList.files[num]);
+		}catch(err){
+			console.log(err);
+		}
+	}
+	
+	//获取选择文件的路径
+	function readPath(obj){
+		try{
+			var oFReader = new FileReader();
+			oFReader.readAsDataURL(obj);
+			oFReader.onloadend = function(oFRevent){
+				var src = oFRevent.target.result;
+				audio.src=src;
+			} 
+		}catch(err){
+			console.log(err);
+		}
 	}
 </script>
 </body>
