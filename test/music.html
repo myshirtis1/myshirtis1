@@ -50,55 +50,41 @@
 	var show     = document.getElementById("show");
 	
 	//触发input的点击事件	
-	upLoad.onclick = ()=>{
+	upLoad.onclick = function (){
 		choose.click();
 	}
 	
 	//input的点击函数
 	function uL(){
-		try{
-			p.innerHTML    = songList.files[0].name.match(/[^\.]+/);
-			oDiv.innerHTML = "";
-			
-			readPath(songList.files[0]);
-			
-			console.log(songList.files[0]);
-			
-			for(var i = 0;i<songList.files.length;i++){
-				oDiv.innerHTML += "<button style='width:100%' onClick='choosePlay("
-					+i
-					+")'>"
-					+ songList.files[i].name.match(/[^\.]+/)
-					+ "</button>";
-			}
-		}
-		catch(err){
-			console.log(err);
+		p.innerHTML    = songList.files[0].name.match(/[^\.]+/);
+		oDiv.innerHTML = "";
+		
+		readPath(songList.files[0]);
+		
+		for(var i=0;i<songList.files.length;i++){
+			oDiv.innerHTML += "<button style='width:100%' onClick='choosePlay("
+				+i
+				+")'>"
+				+ songList.files[i].name.match(/[^\.]+/)
+				+ "</button>";
 		}
 	}
 	
 	//歌曲列表中项的点击函数
 	function choosePlay(num){
-		try{
-			 readPath(songList.files[num]);
-		}catch(err){
-			console.log(err);
-		}
+		 readPath(songList.files[num]);
 	}
 	
 	//获取选择文件的路径
 	function readPath(obj){
-		try{
-			var oFReader = new FileReader();
-			oFReader.readAsDataURL(obj);
-			oFReader.onloadend = function(oFRevent){
-				var src = oFRevent.target.result;
-				audio.src=src;
-			} 
-		}catch(err){
-			console.log(err);
-		}
+		var oFReader = new FileReader();
+		
+		oFReader.readAsDataURL(obj);
+		oFReader.onloadend = function(oFRevent){
+			var src = oFRevent.target.result;
+			audio.src=src;
 	}
+}
 </script>
 </body>
 </html>
